@@ -16,10 +16,9 @@ class GameScene extends Phaser.Scene {
 		gameState.player = this.physics.add.sprite(225, 450, 'codey').setScale(.5);
 
 		const platforms = this.physics.add.staticGroup();
+		platforms.create(325, innerHeight, 'platform').setScale(innerWidth/300, 0.5).refreshBody();
 
-		platforms.create(225, 490, 'platform').setScale(1, .3).refreshBody();
-
-		gameState.scoreText = this.add.text(195, 485, 'Score: 0', { fontSize: '15px', fill: '#000000' });
+		gameState.scoreText = this.add.text(innerWidth/2, innerHeight - 18, 'Score: 0', { fontSize: '15px', fill: '#000000' });
 
 		gameState.player.setCollideWorldBounds(true);
 
@@ -50,7 +49,7 @@ class GameScene extends Phaser.Scene {
 		const bugList = ['bug1', 'bug2', 'bug3']
 
 		const bugGen = () => {
-			const xCoord = Math.random() * 640
+			const xCoord = Math.random() * innerWidth
 			let randomBug = bugList[Math.floor(Math.random() * 3)]
 			bugs.create(xCoord, 10, randomBug)
 		}
@@ -71,8 +70,8 @@ class GameScene extends Phaser.Scene {
 		this.physics.add.collider(gameState.player, bugs, () => {
 			bugGenLoop.destroy();
 			this.physics.pause();
-			this.add.text(180, 250, 'Game Over', { fontSize: '15px', fill: '#000000' });
-			this.add.text(152, 270, 'Click to Restart', { fontSize: '15px', fill: '#000000' });
+			this.add.text(innerWidth/2, innerHeight/2 - 15, 'Game Over', { fontSize: '15px', fill: '#000000' });
+			this.add.text(innerWidth/2 - 33, innerHeight/2 + 15, 'Click to Restart', { fontSize: '15px', fill: '#000000' });
 
 			this.input.on('pointerup', () => {
 				gameState.score = 0;
