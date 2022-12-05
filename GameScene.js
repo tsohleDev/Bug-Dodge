@@ -13,7 +13,7 @@ class GameScene extends Phaser.Scene {
 
 
 	create() {
-		gameState.player = this.physics.add.sprite(225, 450, 'codey').setScale(.5);
+		gameState.player = this.physics.add.sprite(225, 450, 'codey').setScale(innerHeight*0.001);
 
 		const platforms = this.physics.add.staticGroup();
 		platforms.create(325, innerHeight, 'platform').setScale(innerWidth/300, 0.5).refreshBody();
@@ -51,7 +51,7 @@ class GameScene extends Phaser.Scene {
 		const bugGen = () => {
 			const xCoord = Math.random() * innerWidth
 			let randomBug = bugList[Math.floor(Math.random() * 3)]
-			bugs.create(xCoord, 10, randomBug)
+			bugs.create(xCoord, 10, randomBug).setScale(innerHeight*0.001)
 		}
 
 		const bugGenLoop = this.time.addEvent({
@@ -70,8 +70,8 @@ class GameScene extends Phaser.Scene {
 		this.physics.add.collider(gameState.player, bugs, () => {
 			bugGenLoop.destroy();
 			this.physics.pause();
-			this.add.text(innerWidth/2, innerHeight/2 - 15, 'Game Over', { fontSize: '15px', fill: '#000000' });
-			this.add.text(innerWidth/2 - 33, innerHeight/2 + 15, 'Click to Restart', { fontSize: '15px', fill: '#000000' });
+			this.add.text(innerWidth/2, innerHeight/2 - 15, 'Game Over', { fontSize: '25px', fill: '#000000' });
+			this.add.text(innerWidth/2 - 33, innerHeight/2 + 15, 'Click to Restart', { fontSize: '25px', fill: '#000000' });
 
 			this.input.on('pointerup', () => {
 				gameState.score = 0;
